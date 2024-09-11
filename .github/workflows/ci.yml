@@ -1,10 +1,7 @@
-name: Python CI Workflow
+name: Python application
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
     branches:
       - main
 
@@ -13,18 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
-        python-version: '3.12'   # Ensure Python version matches your environment
+        python-version: 3.12
 
-    - name: Install distutils and other essential build tools
-      run: |
-        sudo apt-get update
-        sudo apt-get install python3-distutils python3-dev build-essential -y
+    - name: Install distutils
+      run: sudo apt-get install python3-distutils
 
     - name: Install dependencies
       run: |
@@ -32,6 +26,4 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run tests
-      run: |
-        # Add any test command here if you have tests, for now just run streamlit and others
-        python -c "import pandas; import numpy; import sklearn; import matplotlib; import seaborn; import streamlit"
+      run: python -m unittest discover
