@@ -7,7 +7,6 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from imblearn.over_sampling import SMOTE
-import joblib
 from sklearn.metrics import classification_report, confusion_matrix
 
 # Load and preprocess the data
@@ -88,8 +87,20 @@ def main():
     feature_names = ['Age', 'Gender', 'Ethnicity', 'ParentalEducation', 'Tutoring', 'ParentalSupport', 
                      'StudyTimeWeekly', 'Absences', 'Extracurricular', 'Sports', 'Music', 'Volunteering', 'GPA']
     input_data = []
+
     for feature in feature_names:
-        value = st.number_input(f"Input {feature}", value=0)
+        if feature == 'Gender':
+            value = st.number_input(f"Input {feature} (0 or 1)", min_value=0, max_value=1)
+        elif feature == 'Ethnicity':
+            value = st.number_input(f"Input {feature} (0 to 3)", min_value=0, max_value=3)
+        elif feature == 'ParentalEducation' or feature == 'ParentalSupport':
+            value = st.number_input(f"Input {feature} (0 to 4)", min_value=0, max_value=4)
+        elif feature in ['Tutoring', 'Extracurricular', 'Sports', 'Music', 'Volunteering']:
+            value = st.number_input(f"Input {feature} (0 or 1)", min_value=0, max_value=1)
+        elif feature in ['StudyTimeWeekly', 'GPA']:
+            value = st.number_input(f"Input {feature} (float value)")
+        else:
+            value = st.number_input(f"Input {feature}", value=0)
         input_data.append(value)
 
     # Reshape and scale input data for prediction
