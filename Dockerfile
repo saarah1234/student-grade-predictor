@@ -10,6 +10,7 @@ COPY requirements.txt ./
 # Install any needed packages specified in requirements.txt
 RUN python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
+RUN pip install altair 
 
 # Copy the rest of the application code into the container at /app
 COPY . .
