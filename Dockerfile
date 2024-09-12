@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9-slim
+FROM python:3.12-slim
 
 # Set the working directory in the container
 WORKDIR /app
@@ -11,6 +11,7 @@ COPY requirements.txt ./
 RUN python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
 RUN pip install altair 
+
 
 # Copy the rest of the application code into the container at /app
 COPY . .
